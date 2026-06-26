@@ -2,8 +2,10 @@
 
 A full-stack task management dashboard built with the **MERN** stack (MongoDB, Express, React, Node). It features JWT authentication, a drag-and-drop Kanban board, a sortable list view, and an analytics page — wrapped in a premium dark, glassmorphic UI.
 
-> **Live demo:** _add your Vercel URL here after deploying_
-> **Demo login:** `demo@taskflow.app` / `demo123` (after running the seed script)
+> 🔗 **Live demo:** https://task-dashboard-bbke.onrender.com
+> 🔑 **Demo login:** `demo@taskflow.app` / `demo123`
+>
+> _Note: the backend runs on a free tier that sleeps when idle, so the first login may take ~30–50 seconds to wake up. After that it's fast._
 
 ---
 
@@ -66,6 +68,12 @@ task-dashboard/
     └── index.html
 ```
 
+### What's what
+
+- **`server/`** — the backend API (Node + Express). It defines two data models (`User`, `Task`), handles signup/login with JWT tokens, and exposes the task CRUD endpoints. `server.js` is the entry point; `config/db.js` connects to MongoDB; `middleware/auth.js` protects routes; `routes/` holds the auth and task endpoints; `seed.js` loads demo data.
+- **`client/`** — the React frontend (Vite + Tailwind). `pages/` has the Login, Register, and Dashboard screens; `components/` holds the Kanban board, task modal, list view, charts, and sidebar; `context/AuthContext.jsx` tracks the logged-in user; `api.js` is the configured Axios client that talks to the backend.
+- **How they connect:** the React app reads `VITE_API_URL` to know where the API lives, sends the JWT token on every request, and the API reads/writes tasks in MongoDB Atlas.
+
 ---
 
 ## Run locally
@@ -104,7 +112,7 @@ Visit **http://localhost:5173**, register an account (or use the demo login), an
 
 ## Deploy live (free tier)
 
-You'll deploy three things: the **database** (Atlas), the **API** (Render), and the **frontend** (Vercel).
+You'll deploy three things, all on free tiers: the **database** (MongoDB Atlas), the **API** (Render Web Service), and the **frontend** (Render Static Site). This is exactly how the live demo above is hosted.
 
 ### A. MongoDB Atlas
 1. Create a free account → **Build a Database** → **M0 (free)**.
@@ -135,14 +143,18 @@ git push -u origin main
 
 > Optional: run the seed once via Render's **Shell** tab: `npm run seed`.
 
-### D. Frontend on Vercel
-1. [vercel.com](https://vercel.com) → **Add New** → **Project** → import your repo.
+### D. Frontend on Render (Static Site)
+1. [render.com](https://render.com) → **New** → **Static Site** → connect the same repo.
 2. **Root Directory:** `client`
-3. Framework preset: **Vite** (auto-detected).
-4. **Environment variable:** `VITE_API_URL` = your Render API URL (no trailing slash).
-5. Deploy. Your live link is the Vercel URL.
+3. **Build Command:** `npm install && npm run build`
+4. **Publish Directory:** `dist`
+5. **Environment variable:** `VITE_API_URL` = your Render API URL (no trailing slash).
+6. Deploy. Your live link is the static site URL, e.g. `https://task-dashboard-bbke.onrender.com`.
+7. **Important (SPA routing):** open the site → **Settings → Redirects/Rewrites → Add Rule** → Source `/*`, Destination `/index.html`, Action **Rewrite**. This stops page refreshes from 404-ing.
 
-Then add both links to your project submission. Paste either the **GitHub** repo link or the **live (Vercel)** link in the ScholarX form.
+> The frontend could equally be hosted on **Vercel** (import repo → root `client` → set `VITE_API_URL`); Vercel handles the SPA rewrite automatically.
+
+The live demo is deployed with this exact setup.
 
 ---
 
