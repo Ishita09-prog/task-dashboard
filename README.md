@@ -2,7 +2,7 @@
 
 A full-stack task management dashboard built with the **MERN** stack (MongoDB, Express, React, Node). It features JWT authentication, a drag-and-drop Kanban board, a sortable list view, and an analytics page — wrapped in a premium dark, glassmorphic UI.
 
-> 🔗 **Live demo:** https://task-dashboard-bbke.onrender.com
+> 🔗 **Live demo:** https://task-dashboard-bbke.onrender.com/
 > 🔑 **Demo login:** `demo@taskflow.app` / `demo123`
 >
 > _Note: the backend runs on a free tier that sleeps when idle, so the first login may take ~30–50 seconds to wake up. After that it's fast._
